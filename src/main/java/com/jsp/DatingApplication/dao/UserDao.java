@@ -19,16 +19,25 @@ public class UserDao {
 
 	public User saveUsers(User user) {
 		return userRepository.save(user);
+	}	
+	public List<User> findAllFemaleUsers() {
+		// TODO Auto-generated method stub
+		return userRepository.findByGender(User_gender.FEMALE);
 	}
-
 	
-//	public List<User> findAllMaleUsers(){
-//		return userRepository.findBy
-//	}
-	
+	public List<User> findAllMaleUsers() {
+		return userRepository.findByGender(User_gender.MALE);
+	}
 	
 	public Optional<User> findUserById(int id) {
 		// TODO Auto-generated method stub
 		return userRepository.findById(id);
 	}
+	public List<User> searchByName(String letters) {
+		
+//		searchByName() -> not there in JpaRepo so create.
+		return userRepository.searchByName(letters);
+	}
+
+
 }

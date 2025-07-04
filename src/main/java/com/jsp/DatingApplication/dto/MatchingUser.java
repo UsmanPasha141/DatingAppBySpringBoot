@@ -19,6 +19,7 @@ public class MatchingUser {
 	private int age;
 	private User_gender gender;
 	private List<String> interests;
+//	2 different things than UserEntity
 	private int ageDiff;
 	private int mic; //matching interest count
 

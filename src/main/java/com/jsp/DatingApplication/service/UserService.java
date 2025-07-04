@@ -27,16 +27,32 @@ public class UserService {
 	UserDao userDao;
 
 	public ResponseEntity<?> saveUsers(User user) {
+		
 		User savedUser = userDao.saveUsers(user);
+//		if(savedUser == null) {
+//			return ResponseEntity.status(400).body("You have Not Entered the User!!");
+//		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
 	}
 
 
-//	public ResponseEntity<?> findAllMaleUsers() {
-//		// TODO Auto-generated method stub
-//		
-//		return null;
-//	}
+	public ResponseEntity<?> findAllMaleUsers() {
+		// TODO Auto-generated method stub
+		List<User> allMaleUsers = userDao.findAllMaleUsers();
+		if(allMaleUsers.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Male Users Present in DB!!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(allMaleUsers);
+	}
+	
+	public ResponseEntity<?> findAllFemaleUsers() {
+		// TODO Auto-generated method stub
+		List<User> allFemaleUsers = userDao.findAllFemaleUsers();
+		if(allFemaleUsers.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No female Users Found in DB!!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(allFemaleUsers);
+	}
 
 //	
 	public ResponseEntity<?> findBestMatch(int id, int topno) {
@@ -45,7 +61,7 @@ public class UserService {
 		
 		if(optional.isEmpty()) 
 		{
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid User Id Unable ti find the Best Matches");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid User Id Unable to find the Best Matches");
 		}
 		
 		User user = optional.get();
@@ -122,9 +138,21 @@ public class UserService {
 				topno--;
 			}
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(result)
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 		
 		
+	}
+
+
+	public ResponseEntity<?> searchByName(String letters) {
+		
+//		sql % -> like operator
+		List<User> users = userDao.searchByName("%"+letters+"%");
+		
+		if(users.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No matching user forund via letter "+letters+" mentioned!!!");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(users);
 	}
 
 }

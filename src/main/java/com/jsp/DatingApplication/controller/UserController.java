@@ -23,16 +23,27 @@ public class UserController {
 		return userService.saveUsers(user);
 	}
 	
-//	@GetMapping("/users/gender/male")
-//	public ResponseEntity<?> findAllMaleUsers(){
-//		return userService.findAllMaleUsers();
-//	}
+	@GetMapping("/users/gender/male")
+	public ResponseEntity<?> findAllMaleUsers(){
+		return userService.findAllMaleUsers();
+	}
+	
+	@GetMapping("/users/gender/female")
+	public ResponseEntity<?> findAllFemaleUsers(){
+		return userService.findAllFemaleUsers();
+	}
 	
 	
 //	for id = 1 or 5  -> topno = 3 or 10 top 3 or 10 people who is matching the id
 	@GetMapping("/users/best-match/{id}/{topno}")
 	public ResponseEntity<?> findBestMatch(@PathVariable int id, @PathVariable int topno){
 		return userService.findBestMatch(id, topno);
+	}
+	
+	@GetMapping("/users/search/name/{letters}")
+	public ResponseEntity<?> searchByName(@PathVariable String letters){
+		return userService.searchByName(letters); 
+//		return null;
 	}
 	
 }
